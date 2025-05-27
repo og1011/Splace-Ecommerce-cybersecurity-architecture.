@@ -1,0 +1,38 @@
+Use Diagrams.net, Lucidchart, or draw.io to build it visually.
+
+High-Level Architecture – Secure Splace App E-commerce Platform
+
+                        +-----------------------------+
+                        |      Frontend (Browser)     |
+                        +-------------+---------------+
+                                      |
+                            HTTPS (TLS 1.2+)
+                                      |
+                        +-------------v--------------+
+                        |     Web Server / CDN       |
+                        | (e.g., NGINX, Cloudflare)  |
+                        +-------------+--------------+
+                                      |
+                     +-------------------------------+
+                     |        API Gateway            |
+                     |  (Authentication, Rate Limits)|
+                     +-------------------------------+
+                    /                                 \
+     +--------------v--------------+      +------------v-------------+
+     |   Authentication Service    |      |      Core App Logic      |
+     | (OAuth2, JWT, User Mgmt)    |      |  (Cart, Orders, Products)|
+     +--------------+--------------+      +------------+-------------+
+                    |                               |
+         +----------v----------+         +-----------v-----------+
+         |  Database (Encrypted)|         |  Payment Gateway API  |
+         |  (PostgreSQL, AES)  |         | (3rd Party, Tokenized)|
+         +---------------------+         +------------------------+
+
+                       [All behind a Virtual Private Cloud (VPC)]
+
+Security Layers:
+ • All communication over HTTPS.
+ • Role-based access via JWT tokens.
+ • Database encryption at rest using AES-256.
+ • API Gateway acts as first line of defense (rate-limiting, auth, logging).
+ • WAF (Web Application Firewall) in front of public endpoints.
